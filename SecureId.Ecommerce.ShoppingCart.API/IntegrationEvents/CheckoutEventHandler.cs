@@ -83,7 +83,7 @@ namespace SecureId.Ecommerce.ShoppingCart.API.IntegrationEvent
                 _context.orderHeaders.Add(orderHeader);
                 await _context.SaveChangesAsync();
 
-                return new ResponseMessage { Data = _mapper.Map<CartDto>(cart), Status = true, Message = "Checkout Completed" };
+                return new ResponseMessage { Status = true, Message = "Checkout Completed" };
             }
         }
     }

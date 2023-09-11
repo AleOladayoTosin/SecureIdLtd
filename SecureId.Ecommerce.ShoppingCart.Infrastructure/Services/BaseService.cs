@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using SecureId.Ecommerce.ShoppingCart.Application.DTOs;
 using SecureId.Ecommerce.ShoppingCart.Application.Interfaces;
 using System.Diagnostics;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -22,7 +23,11 @@ namespace SecureId.Ecommerce.ShoppingCart.Infrastructure.Services
         {
             try
             {
-                var client = httpClient.CreateClient("NotificationEngine");
+                HttpClientHandler clientHandler = new HttpClientHandler();
+                clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+                clientHandler.SslProtocols = System.Security.Authentication.SslProtocols.Tls12;
+
+                HttpClient client = new HttpClient(clientHandler);
                 HttpRequestMessage msg = new HttpRequestMessage() { Version = new Version(2, 0) };
                 msg.Headers.Add("accept", "application/json");
                 msg.RequestUri = new Uri(apiRequest.Url);
@@ -38,7 +43,8 @@ namespace SecureId.Ecommerce.ShoppingCart.Infrastructure.Services
 
                 if (!string.IsNullOrEmpty(apiRequest.AccessToken))
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiRequest.AccessToken);
+                    var token = apiRequest.AccessToken.Split(" ");
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token[1]);
                 }
                 HttpResponseMessage apiResponse = null;
                 switch (apiRequest.ApiType)

@@ -43,7 +43,7 @@ namespace SecureId.Ecommerce.Payment.Job.Workers
             }
             catch (Exception)
             {
-                order.PaymentStatus = PaymentType.FAILED.ToString();
+                order.PaymentStatus = PaymentType.PENDING.ToString();
                 order.Retries++;
                 _context.SaveChanges();
             }

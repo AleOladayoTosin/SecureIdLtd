@@ -58,7 +58,7 @@ namespace SecureId.Ecommerce.ShoppingCart.API.IntegrationEvent
                         CartHeader cartHeader = new();
 
                         cartHeader.UserId = cart.CartHeader.UserId;
-
+                        cartHeader.CouponCode = cart.CartHeader.CouponCode;
                         var createHeader = _context.CartHeaders.Add(cartHeader);
                         await _context.SaveChangesAsync();
 

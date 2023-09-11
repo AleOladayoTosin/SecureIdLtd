@@ -31,7 +31,7 @@ namespace SecureId.Ecommerce.ShoppingCart.Infrastructure.Services
             var response = await _baseService.SendAsync<ResponseMessage>(new ApiRequest()
             {
                 ApiType = ApiType.GET,
-                Url = url + "api/code/" + code,
+                Url = url + "api/Product/coupon/" + code,
             });
             return response;
         }
@@ -45,6 +45,7 @@ namespace SecureId.Ecommerce.ShoppingCart.Infrastructure.Services
             {
                 ApiType = ApiType.GET,
                 Url = url + "api/Product/" + productId,
+                AccessToken = accessToken
             });
             return response;
         }

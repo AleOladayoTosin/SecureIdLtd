@@ -32,7 +32,7 @@ namespace SecureId.Ecommerce.Product.API.Controllers
             HandleResult(await Mediator.Send(new RemoveProductEventHandler.Command { Id = id }));
 
         [Authorize]
-        [HttpGet("{code}")]
+        [HttpGet("coupon/{code}")]
         public async Task<IActionResult> GetProduGetDiscountForCodect(string code) =>
             HandleResult(await Mediator.Send(new GetDiscountForCodeEventHandler.Query { Code = code }));
 
